@@ -7,67 +7,67 @@ Este proyecto cuetna solamente con 2 archivos
 
 Al seguir siendo solamente un prototipo no cuenta con interfaz grafica, pero en un futuro podria implementarla
 
-Analizador de Tendencias del Mercado
-📌 Descripción
 
-Este proyecto es un prototipo desarrollado en Python que permite analizar tendencias de acciones a partir de un archivo CSV con precios históricos (365 días).
+# 📈 Analizador de Tendencias del Mercado
+
+---
+
+## 📌 Descripción
+
+Este proyecto es un prototipo desarrollado en **Python** que permite analizar tendencias de acciones a partir de un archivo CSV con precios históricos (365 días).
 
 El sistema calcula probabilidades de subida y bajada en un período determinado, permitiendo analizar:
 
-📊 El mercado completo
-
-📈 Una acción específica
+- 📊 El mercado completo  
+- 📈 Una acción específica  
 
 El objetivo es aplicar análisis estadístico básico sobre datos históricos de precios.
 
-🧠 Flujo del Programa
+---
+
+## 🧠 Flujo del Programa
 
 El programa sigue el siguiente flujo lógico:
 
-El usuario ingresa el día actual (1–365).
+1. El usuario ingresa el **día actual** (1–365).
+2. Selecciona el **período de análisis**:
+   - Última semana (7 días)
+   - Último mes (30 días)
+   - Período personalizado
+3. Elige el tipo de análisis:
+   - Mercado general
+   - Acción específica
+4. El sistema calcula:
+   - Probabilidad de subida
+   - Probabilidad de bajada
+5. Se muestran los resultados en formato de tabla comparativa.
 
-Selecciona el período de análisis:
+---
 
-Última semana (7 días)
+## 📂 Formato del Archivo CSV
 
-Último mes (30 días)
+El archivo `acciones.csv` debe tener la siguiente estructura:
 
-Período personalizado
-
-Elige el tipo de análisis:
-
-Mercado general
-
-Acción específica
-
-El sistema calcula:
-
-Probabilidad de subida
-
-Probabilidad de bajada
-
-Se muestran los resultados en formato de tabla comparativa.
-
-📂 Formato del Archivo CSV
-
-El archivo acciones.csv debe tener la siguiente estructura:
-
+```csv
 Nombre,Día1,Día2,Día3,...,Día365
 Apple,150.2,151.8,149.7,...
 Intel,30.5,30.8,31.1,...
 Nike,120.3,121.0,119.8,...
-Requisitos:
+```
 
-La primera columna debe contener el nombre de la acción.
+### Requisitos
 
-Las columnas siguientes deben contener los precios diarios.
+- La primera columna debe contener el **nombre de la acción**.
+- Las columnas siguientes deben contener los **precios diarios**.
+- Se asume un total de **365 días por acción**.
 
-Se asume un total de 365 días por acción.
+---
 
-⚙️ Estructura del Código
+## ⚙️ Estructura del Código
 
 El proyecto está organizado en un solo archivo Python con la siguiente estructura:
 
+```python
 - Funciones
     - cargar_datos()
     - analizar_tendencia()
@@ -78,66 +78,155 @@ El proyecto está organizado en un solo archivo Python con la siguiente estructu
 
 - Bloque principal:
     if __name__ == "__main__":
+```
 
 Esto garantiza una estructura limpia y modular.
 
-🔎 Funciones Principales
-📥 cargar_datos(ruta_archivo)
+---
+
+## 🔎 Funciones Principales
+
+### 📥 cargar_datos(ruta_archivo)
 
 Carga el archivo CSV y lo convierte en:
 
-nombres → Lista con los nombres de las acciones.
-
-P → Matriz de precios (lista de listas).
+- `nombres` → Lista con los nombres de las acciones.
+- `P` → Matriz de precios (lista de listas).
 
 Devuelve:
 
+```python
 nombres, P
-📊 analizar_tendencia(precios, inicio, fin)
+```
+
+---
+
+### 📊 analizar_tendencia(precios, inicio, fin)
 
 Calcula la probabilidad de subida y bajada dentro de un rango de días.
 
-Parámetros:
+**Parámetros:**
 
-precios: lista de precios de una acción.
+- `precios`: lista de precios de una acción.
+- `inicio`: día inicial (1–365).
+- `fin`: día final (1–365).
 
-inicio: día inicial (1–365).
+**Devuelve:**
 
-fin: día final (1–365).
-
-Devuelve:
-
+```python
 (prob_subida, prob_bajada)
+```
 
 Las probabilidades se expresan en porcentaje (%).
 
-📅 pedir_dia_actual()
+---
+
+### 📅 pedir_dia_actual()
 
 Solicita al usuario el día actual validando que:
 
-Sea un número entero.
+- Sea un número entero.
+- Esté entre 1 y 365.
 
-Esté entre 1 y 365.
+---
 
-⏳ pedir_periodo(dia_actual)
+### ⏳ pedir_periodo(dia_actual)
 
 Permite seleccionar el período de análisis:
 
-Última semana
-
-Último mes
-
-Período personalizado
+- Última semana
+- Último mes
+- Período personalizado
 
 Devuelve:
 
+```python
 (inicio, fin)
-🌎 analizar_mercado(nombres, P, inicio, fin)
+```
+
+---
+
+### 🌎 analizar_mercado(nombres, P, inicio, fin)
 
 Analiza todas las acciones y genera una lista de resultados con:
 
-Nombre
+- Nombre
+- Probabilidad de subida
+- Probabilidad de bajada
 
-Probabilidad de subida
+---
 
-Probabilidad de bajada
+### 📋 mostrar_tabla_tendencias(resultados, inicio, fin)
+
+Genera una tabla comparativa ordenada:
+
+- Columna izquierda → Mayor probabilidad de bajada (**VENDE**)
+- Columna derecha → Mayor probabilidad de subida (**COMPRA**)
+
+Ejemplo:
+
+```
+==============================================
+Tendencias Día 48 - Día 55
+==============================================
+
+VENDE                    COMPRA
+---------------------------------------------
+Apple (43%)              Intel (47%)
+Nike (41%)               Nvidia (35%)
+```
+
+---
+
+## 📐 Método de Cálculo
+
+La probabilidad se calcula mediante la siguiente fórmula:
+
+```
+Probabilidad = (Cantidad de días con subida o bajada / Total de comparaciones) × 100
+```
+
+Se basa únicamente en análisis estadístico histórico dentro del rango seleccionado.
+
+No realiza predicciones futuras ni modelos de machine learning.
+
+---
+
+## 🚀 Cómo Ejecutar el Proyecto
+
+1. Instalar Python 3.
+2. Colocar `acciones.csv` en el mismo directorio del archivo `.py`.
+3. Ejecutar en terminal:
+
+```bash
+python nombre_del_archivo.py
+```
+
+4. Seguir las instrucciones en pantalla.
+
+---
+
+## 📌 Estado del Proyecto
+
+✔ Prototipo funcional  
+✔ Validación de entradas  
+✔ Análisis por período  
+✔ Mercado general o acción individual  
+✔ Presentación estructurada de resultados  
+
+---
+
+## 🔮 Posibles Mejoras Futuras
+
+- 📊 Implementar gráficos de tendencias.
+- 📈 Agregar medias móviles.
+- 📉 Calcular volatilidad y desviación estándar.
+- 💾 Exportar resultados a CSV.
+- 🖥 Crear interfaz gráfica.
+- 🤖 Incorporar modelos predictivos.
+
+---
+
+## 👨‍💻 Autor
+
+Proyecto desarrollado como prototipo académico para análisis estadístico básico del mercado de acciones utilizando Python.
