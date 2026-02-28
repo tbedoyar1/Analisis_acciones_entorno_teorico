@@ -7,36 +7,38 @@ Este proyecto cuetna solamente con 2 archivos
 
 Al seguir siendo solamente un prototipo no cuenta con interfaz grafica, pero en un futuro podria implementarla
 
-nalizador de Tendencias del Mercado (Prototipo)
+Analizador de Tendencias del Mercado
 📌 Descripción
 
-Este proyecto es un prototipo en Python que analiza tendencias de acciones a partir de un archivo CSV con precios históricos (365 días).
+Este proyecto es un prototipo desarrollado en Python que permite analizar tendencias de acciones a partir de un archivo CSV con precios históricos (365 días).
 
-El sistema permite:
+El sistema calcula probabilidades de subida y bajada en un período determinado, permitiendo analizar:
 
-Seleccionar el día actual.
+📊 El mercado completo
 
-Elegir un período de análisis (semana, mes o personalizado).
+📈 Una acción específica
 
-Analizar el mercado completo o una acción específica.
+El objetivo es aplicar análisis estadístico básico sobre datos históricos de precios.
 
-Obtener probabilidades de subida y bajada en forma de tabla comparativa.
+🧠 Flujo del Programa
 
-El objetivo es ofrecer una herramienta simple pero funcional para estudiar tendencias estadísticas básicas del mercado.
-
-🧠 Lógica del Programa
-
-El flujo del programa es el siguiente:
+El programa sigue el siguiente flujo lógico:
 
 El usuario ingresa el día actual (1–365).
 
-Selecciona el período a analizar.
+Selecciona el período de análisis:
 
-Elige si desea analizar:
+Última semana (7 días)
+
+Último mes (30 días)
+
+Período personalizado
+
+Elige el tipo de análisis:
 
 Mercado general
 
-Una acción específica
+Acción específica
 
 El sistema calcula:
 
@@ -44,36 +46,54 @@ Probabilidad de subida
 
 Probabilidad de bajada
 
-Se muestran los resultados en formato de tabla.
+Se muestran los resultados en formato de tabla comparativa.
 
-📂 Estructura del Archivo CSV
+📂 Formato del Archivo CSV
 
-El archivo acciones.csv debe tener el siguiente formato:
+El archivo acciones.csv debe tener la siguiente estructura:
 
 Nombre,Día1,Día2,Día3,...,Día365
 Apple,150.2,151.8,149.7,...
 Intel,30.5,30.8,31.1,...
 Nike,120.3,121.0,119.8,...
+Requisitos:
 
-La primera columna contiene el nombre de la acción.
+La primera columna debe contener el nombre de la acción.
 
-Las columnas siguientes contienen precios diarios.
+Las columnas siguientes deben contener los precios diarios.
 
 Se asume un total de 365 días por acción.
 
-⚙️ Funciones Principales
-cargar_datos(ruta_archivo)
+⚙️ Estructura del Código
 
-Carga el archivo CSV y convierte los datos en:
+El proyecto está organizado en un solo archivo Python con la siguiente estructura:
 
-nombres: lista con los nombres de las acciones.
+- Funciones
+    - cargar_datos()
+    - analizar_tendencia()
+    - pedir_dia_actual()
+    - pedir_periodo()
+    - analizar_mercado()
+    - mostrar_tabla_tendencias()
 
-P: matriz de precios (lista de listas).
+- Bloque principal:
+    if __name__ == "__main__":
+
+Esto garantiza una estructura limpia y modular.
+
+🔎 Funciones Principales
+📥 cargar_datos(ruta_archivo)
+
+Carga el archivo CSV y lo convierte en:
+
+nombres → Lista con los nombres de las acciones.
+
+P → Matriz de precios (lista de listas).
 
 Devuelve:
 
 nombres, P
-analizar_tendencia(precios, inicio, fin)
+📊 analizar_tendencia(precios, inicio, fin)
 
 Calcula la probabilidad de subida y bajada dentro de un rango de días.
 
@@ -89,9 +109,9 @@ Devuelve:
 
 (prob_subida, prob_bajada)
 
-Las probabilidades se expresan en porcentaje.
+Las probabilidades se expresan en porcentaje (%).
 
-pedir_dia_actual()
+📅 pedir_dia_actual()
 
 Solicita al usuario el día actual validando que:
 
@@ -99,104 +119,25 @@ Sea un número entero.
 
 Esté entre 1 y 365.
 
-pedir_periodo(dia_actual)
+⏳ pedir_periodo(dia_actual)
 
-Permite seleccionar:
+Permite seleccionar el período de análisis:
 
-Última semana (7 días)
+Última semana
 
-Último mes (30 días)
+Último mes
 
 Período personalizado
 
 Devuelve:
 
 (inicio, fin)
-analizar_mercado(nombres, P, inicio, fin)
+🌎 analizar_mercado(nombres, P, inicio, fin)
 
-Analiza todas las acciones y devuelve una lista de resultados:
+Analiza todas las acciones y genera una lista de resultados con:
 
-[
-    {"nombre": "Apple", "subida": 43.2, "bajada": 56.8},
-    ...
-]
-mostrar_tabla_tendencias(resultados, inicio, fin)
+Nombre
 
-Genera una tabla comparativa:
+Probabilidad de subida
 
-Columna izquierda: acciones con mayor probabilidad de bajada (VENDE).
-
-Columna derecha: acciones con mayor probabilidad de subida (COMPRA).
-
-Ejemplo:
-
-Tendencias Día 48 - Día 55
-
-VENDE                    COMPRA
----------------------------------------------
-Apple (43%)              Intel (47%)
-Nike (41%)               Nvidia (35%)
-🏗 Diseño del Proyecto
-
-Todo el código se encuentra en un solo archivo.
-
-Las funciones están separadas de la ejecución principal.
-
-El flujo principal se encuentra dentro de:
-
-if __name__ == "__main__":
-
-Esto garantiza una estructura limpia y profesional.
-
-📊 Método de Cálculo
-
-La probabilidad se calcula mediante:
-
-Probabilidad=Cantidad de dıˊas con subida o bajadaTotal de comparaciones×100
-Probabilidad=
-Total de comparaciones
-Cantidad de d
-ı
-ˊ
-as con subida o bajada
-	​
-
-×100
-
-No se consideran predicciones futuras, únicamente análisis estadístico histórico dentro del rango seleccionado.
-
-🚀 Cómo Ejecutar
-
-Asegúrate de tener Python 3 instalado.
-
-Coloca el archivo acciones.csv en el mismo directorio.
-
-Ejecuta:
-
-python nombre_del_archivo.py
-
-Sigue las instrucciones en pantalla.
-
-📌 Estado del Proyecto
-
-✔ Prototipo funcional
-✔ Análisis por período
-✔ Mercado completo o acción individual
-✔ Validación de entrada
-✔ Presentación ordenada de resultados
-
-🔮 Posibles Mejoras Futuras
-
-Agregar gráficos de tendencias.
-
-Implementar análisis con medias móviles.
-
-Exportar resultados a CSV.
-
-Añadir interfaz gráfica.
-
-Incorporar más métricas estadísticas (volatilidad, desviación estándar, etc.).
-
-👨‍💻 Autor: Thomas Bedoya Rendon
-
-Proyecto desarrollado como prototipo académico para análisis estadístico básico del mercado de acciones utilizando Python.
+Probabilidad de bajada
